@@ -26,7 +26,7 @@ public class LoginTest {
         cap.setCapability("udid", "5b2407b0");
         cap.setCapability("platformName", "Android");
         cap.setCapability("platformVersion", "10");
-        cap.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "id.co.wlb.debug");
+        cap.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, SettingDataWLB.APP_PACKAGE);
         cap.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, "com.wlb.framework.learning.ui.splash.SplashActivity");
 
         URL url = new URL("http://127.0.0.1:4723/wd/hub");
@@ -36,7 +36,7 @@ public class LoginTest {
     }
 
     @Test
-    public void LoginEnterUsernamePasswordTest() throws InterruptedException {
+    public void LoginEnterUsernamePasswordTest(){
         System.out.println("# Starting the LoginEnterUsernamePasswordTest() #");
 
         WebDriverWait wait = new WebDriverWait(driver, 30);
