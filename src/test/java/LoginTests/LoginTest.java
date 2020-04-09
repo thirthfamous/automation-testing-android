@@ -1,4 +1,4 @@
-package tests;
+package LoginTests;
 
 import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import pages.HomePage;
-import pages.LoginPage;
+import Pages.HomePage;
+import Pages.LoginPage;
 
 import java.net.MalformedURLException;
 import java.net.URL;
