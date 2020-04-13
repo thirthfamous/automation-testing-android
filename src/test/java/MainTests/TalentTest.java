@@ -1,29 +1,30 @@
 package MainTests;
 
-import Pages.EditTalentInformationPage;
+import Pages.*;
 import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.offset.PointOption;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import Pages.HomePage;
-import Pages.TalentPage;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
+import java.util.HashMap;
 
 public class TalentTest {
     AppiumDriver<MobileElement> driver;
-    HomePage homePage;
     TalentPage talentPage;
+    boolean potCompetency = true;
+    boolean potAttendance = true;
+    boolean potCourse = false;
+    boolean potSosmed = false;
+    boolean pitTask = true;
+    boolean pitOgf = true;
+    boolean pitMultirater = true;
+    boolean pitNps = false;
 
     @BeforeEach
     public void setUp() throws MalformedURLException {
@@ -91,9 +92,110 @@ public class TalentTest {
         editTalentInformationPage.setTalentInformationMLY();
     }
 
+    @Test
+    public void CheckBadgeTest(){
+        talentPage = new TalentPage(driver);
+        talentPage.showTalentPage();
+        talentPage.waitForTalentPageShow();
+        talentPage.scroll(600, 2249, 600, 2);
+        Assertions.assertTrue(!talentPage.getBadgeName().getText().equals(""));
+        Assertions.assertTrue(!talentPage.getBadgeVersion().getText().equals(""));
+        Assertions.assertTrue(!talentPage.getuserValue().getText().equals(""));
+
+        testBadgePotentialPerformance(potCompetency, potAttendance, potCourse, potSosmed, pitTask, pitOgf, pitMultirater, pitNps, talentPage);
+
+    }
+
+    @Test
+    public void CheckBadgeDetailsTest(){
+        talentPage = new TalentPage(driver);
+        talentPage.showTalentPage();
+        talentPage.waitForTalentPageShow();
+        talentPage.getSeeAllBadgesBtn().click();
+
+        TalentSeeAllBadgesPage talentSeeAllBadgesPage = new TalentSeeAllBadgesPage(driver);
+        talentSeeAllBadgesPage.clickBadge();
+
+        TalentSeeAllBadgesBadgeDetails talentSeeAllBadgesBadgeDetails = new TalentSeeAllBadgesBadgeDetails(driver);
+        testBadgePotentialPerformance(true, true, false, false, true, true, true, false, talentSeeAllBadgesBadgeDetails);
+    }
+
+    @Test
+    public void AddNewDevelopmentPlanTest(){
+        talentPage = new TalentPage(driver);
+        talentPage.showTalentPage();
+        talentPage.waitForTalentPageShow();
+
+        talentPage.scrolToBottom();
+
+        talentPage.getaddNewDevelopmentPlanBtn().click();
+        TalentNewDevelopmentPlanPage talentNewDevelopmentPlanPage = new TalentNewDevelopmentPlanPage(driver);
+        HashMap<String, String> developmentPlan = talentNewDevelopmentPlanPage.fillAllForm();
+        talentNewDevelopmentPlanPage.getSubmitBtn().click();
+
+        talentPage = new TalentPage(driver);
+        talentPage.waitForTalentPageShowAfterAddDevelopmentPlan();
+        Assertions.assertTrue(talentPage.getDevelopmentPlanNameFirstArray()
+                .getText().equals(developmentPlan.get("name")));
+        Assertions.assertTrue(talentPage.getDevelopmentPlanDate().getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") ));
+        Assertions.assertTrue(talentPage.getDevelopmentPlanStatus().getText().equals("Waiting"));
+
+
+        talentPage.getDevelopmentPlanNameFirstArray().click();
+
+        TalentPlanDetailsPage talentPlanDetailsPage = new TalentPlanDetailsPage(driver);
+        Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
+                .getText().equals(developmentPlan.get("name")));
+
+        Assertions.assertTrue(talentPlanDetailsPage.getStatusWaiting()
+                            .getText().equals("Waiting"));
+
+        Assertions.assertTrue((talentPlanDetailsPage.getPlanDate()
+                .getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") )));
+
+        Assertions.assertTrue(talentPlanDetailsPage.getMeasureOfSuccess()
+                .getText().equals(developmentPlan.get("measure")));
+
+        Assertions.assertTrue(talentPlanDetailsPage.verifyCompetency(developmentPlan.get("firstCompetency")));
+    }
+
+    @Test
+    public void EditPlanDevelopmentTest(){
+
+    }
+
     @AfterEach
     public void tearDown() {
         System.out.println("Login Testing Finished");
         driver.quit();
+    }
+
+
+
+    private void testBadgePotentialPerformance(boolean potCompetency, boolean potAttendance, boolean potCourse, boolean potSosmed, boolean pitTask, boolean pitOgf, boolean pitMultirater, boolean pitNps, TalentPage page ){
+        if(potCompetency){
+            Assertions.assertTrue(!page.getPotCompetency().getText().equals(""));
+        }
+        if(potAttendance){
+            Assertions.assertTrue(!page.getPotAttendance().getText().equals(""));
+        }
+        if(potCourse){
+            //assertion course
+        }
+        if(potSosmed){
+            // assertion sosmed
+        }
+        if(pitTask){
+            Assertions.assertTrue(!page.getpitTask().getText().equals(""));
+        }
+        if(pitOgf){
+            Assertions.assertTrue(!page.getpitOGF().getText().equals(""));
+        }
+        if(pitMultirater){
+            Assertions.assertTrue(!page.getpitMultirater().getText().equals(""));
+        }
+        if(pitNps){
+            // assert pitnps
+        }
     }
 }

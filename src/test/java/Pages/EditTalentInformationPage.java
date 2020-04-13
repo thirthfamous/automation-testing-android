@@ -40,11 +40,7 @@ public class EditTalentInformationPage {
     }
 
     private void pressKeyboardBtn(){
-        io.appium.java_client.TouchAction action = new TouchAction(driver);
-        driver.findElement(talentMobilityTextArea).click();
-        action.tap(new PointOption().withCoordinates(647,2056));
-        action.release();
-        action.perform();
+        driver.findElement(talentMobilityTextArea).sendKeys("b");
     }
 
     public MobileElement getRiskOfLossSpinner(){
@@ -79,6 +75,7 @@ public class EditTalentInformationPage {
 
         setTalentMobilityTextArea();
         clickSubmitBtn();
+
     }
 
     /**
@@ -108,6 +105,11 @@ public class EditTalentInformationPage {
         action.perform();
 
         clickSubmitBtn();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

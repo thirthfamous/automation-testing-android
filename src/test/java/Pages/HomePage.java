@@ -40,9 +40,22 @@ public class HomePage {
         System.out.println("Click Talent Menu Done");
     }
 
+    public void clickSomewhere(int x, int y){
+        io.appium.java_client.TouchAction action = new TouchAction(driver);
+        action.tap(new PointOption().withCoordinates(x,y));
+        action.release();
+        action.perform();
+    }
+
     public void showTalentPage(){
         waitforHomePageShowed();
         clickShowMenuButton();
         clickTalentMenuButton();
+    }
+    public void scroll(int xLongPress, int yLongPress, int xRelease, int yRelease) {
+        TouchAction action = new TouchAction(driver);
+        action.longPress(new PointOption().withCoordinates(xLongPress,yLongPress))
+                .moveTo(new PointOption().withCoordinates(xRelease, yRelease))
+                .release().perform();
     }
 }
