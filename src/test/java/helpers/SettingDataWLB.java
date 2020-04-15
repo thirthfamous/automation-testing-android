@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class SettingDataWLB {
-    public final static String APP_PACKAGE = "id.co.wlb.staging";
+    public final static String APP_PACKAGE = "id.co.wlb.debug";
 
     public static DesiredCapabilities createLoggedInDesiredCabability(){
         DesiredCapabilities cap = new DesiredCapabilities();

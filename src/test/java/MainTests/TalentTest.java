@@ -162,7 +162,29 @@ public class TalentTest {
     }
 
     @Test
-    public void EditPlanDevelopmentTest(){
+    public void EditDevelopmentPlanTest(){
+        TalentPlanDetailsPage talentPlanDetailsPage = new TalentPlanDetailsPage(driver);
+        talentPlanDetailsPage.showEditPlanForm();
+
+        TalentPlanDetailsEditPlan talentPlanDetailsEditPlan = new TalentPlanDetailsEditPlan(driver);
+        HashMap<String, String> developmentPlan = talentPlanDetailsEditPlan.fillAllForm();
+        talentPlanDetailsEditPlan.getSubmitBtn().click();
+
+        talentPlanDetailsPage.waitForTalentPlanDetailsPageLoaded();
+
+        Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
+                .getText().equals(developmentPlan.get("name")));
+
+        Assertions.assertTrue(talentPlanDetailsPage.getStatusWaiting()
+                            .getText().equals("Waiting"));
+
+        Assertions.assertTrue((talentPlanDetailsPage.getPlanDate()
+                .getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") )));
+
+        Assertions.assertTrue(talentPlanDetailsPage.getMeasureOfSuccess()
+                .getText().equals(developmentPlan.get("measure")));
+
+        Assertions.assertTrue(talentPlanDetailsPage.verifyCompetency(developmentPlan.get("firstCompetency")));
 
     }
 

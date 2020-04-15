@@ -46,6 +46,7 @@ public class TalentNewDevelopmentPlanPage extends HomePage{
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String data = name+" "+formatter.format(date);
+        getName().clear();
         getName().sendKeys(data);
         driver.hideKeyboard();
         return data;
@@ -71,6 +72,7 @@ public class TalentNewDevelopmentPlanPage extends HomePage{
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String data = measure+" "+formatter.format(date);
+        getEtMeasure().clear();
         getEtMeasure().sendKeys(data);
         driver.hideKeyboard();
         return data;

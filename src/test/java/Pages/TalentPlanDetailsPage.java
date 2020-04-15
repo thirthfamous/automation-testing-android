@@ -4,6 +4,8 @@ import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TalentPlanDetailsPage extends TalentPage {
 
@@ -13,10 +15,32 @@ public class TalentPlanDetailsPage extends TalentPage {
     private By competencyFirstArray = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.LinearLayout/android.widget.TextView");
     private By competencySecondArray = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.LinearLayout/android.widget.TextView");
     private By planDate = By.id(SettingDataWLB.APP_PACKAGE+":id/planDate");
+    private By moreBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/more");
 
     public TalentPlanDetailsPage(AppiumDriver<MobileElement> driver) {
         super(driver);
         this.driver = driver;
+    }
+
+    public void waitForTalentPlanDetailsPageLoaded(){
+        new WebDriverWait(this.driver, 30)
+                .until(ExpectedConditions.presenceOfElementLocated(planTitle));
+    }
+
+    public void showPlanDetails(){
+        showTalentPage();
+        scrollToBottom();
+        getDevelopmentPlanNameFirstArray().click();
+    }
+
+    public void showEditPlanForm(){
+        showPlanDetails();
+        getMoreBtn().click();
+        clickSomewhere(846, 341);
+    }
+
+    public MobileElement getMoreBtn(){
+        return driver.findElement(moreBtn);
     }
 
     public MobileElement getPlanDate(){
