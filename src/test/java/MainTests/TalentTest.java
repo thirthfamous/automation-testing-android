@@ -69,6 +69,7 @@ public class TalentTest {
         talentPage = new TalentPage(driver);
         talentPage.showTalentPage();
         String talentMobility = talentPage.getTalentMobility().getText()+"b";
+
         talentPage.clickTalentInformation();
 
         EditTalentInformationPage editTalentInformationPage = new EditTalentInformationPage(driver);
@@ -82,6 +83,7 @@ public class TalentTest {
         String futureLeader = "No";
 
         editTalentInformationPage.setTalentInformationHHN();
+        talentPage.waitForMobilityChanged(talentMobility);
 
         Assertions.assertTrue(talentPage.getRiskOfLoss().getText().equals(riskOfLoss));
         Assertions.assertTrue(talentPage.getImpactOfLoss().getText().equals(impactOfLoss));
@@ -126,7 +128,7 @@ public class TalentTest {
         talentPage.showTalentPage();
         talentPage.waitForTalentPageShow();
 
-        talentPage.scrolToBottom();
+        talentPage.scrollToBottom();
 
         talentPage.getaddNewDevelopmentPlanBtn().click();
         TalentNewDevelopmentPlanPage talentNewDevelopmentPlanPage = new TalentNewDevelopmentPlanPage(driver);
@@ -166,7 +168,7 @@ public class TalentTest {
 
     @AfterEach
     public void tearDown() {
-        System.out.println("Login Testing Finished");
+        System.out.println("Testing Finished");
         driver.quit();
     }
 

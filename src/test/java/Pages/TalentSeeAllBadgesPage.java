@@ -1,5 +1,6 @@
 package Pages;
 
+import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -8,7 +9,7 @@ import org.openqa.selenium.By;
 
 public class TalentSeeAllBadgesPage extends HomePage {
     AppiumDriver<MobileElement> driver;
-    By badge = By.id("id.co.wlb.debug:id/parentLy");
+    By badge = By.id(SettingDataWLB.APP_PACKAGE+":id/parentLy");
 
     public TalentSeeAllBadgesPage(AppiumDriver<MobileElement> driver) {
         super(driver);

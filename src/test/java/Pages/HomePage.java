@@ -1,17 +1,17 @@
 package Pages;
 
+import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage {
     AppiumDriver<MobileElement> driver;
-    By searchBtn = By.id("id.co.wlb.debug:id/search");
+    By searchBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/search");
     By showMenuBtn = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.LinearLayout/android.view.ViewGroup/android.widget.ImageButton");
 
     public HomePage(AppiumDriver<MobileElement> driver){
@@ -34,7 +34,7 @@ public class HomePage {
 
     public void clickTalentMenuButton(){
         io.appium.java_client.TouchAction action = new TouchAction(driver);
-        action.tap(new PointOption().withCoordinates(334,1660));
+        action.tap(new PointOption().withCoordinates(334,1356));
         action.release();
         action.perform();
         System.out.println("Click Talent Menu Done");
@@ -52,6 +52,8 @@ public class HomePage {
         clickShowMenuButton();
         clickTalentMenuButton();
     }
+
+
     public void scroll(int xLongPress, int yLongPress, int xRelease, int yRelease) {
         TouchAction action = new TouchAction(driver);
         action.longPress(new PointOption().withCoordinates(xLongPress,yLongPress))

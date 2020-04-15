@@ -1,5 +1,6 @@
 package Pages;
 
+import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
@@ -11,13 +12,13 @@ import java.util.HashMap;
 public class TalentNewDevelopmentPlanPage extends HomePage{
 
     AppiumDriver<MobileElement> driver;
-    private By name = By.id("id.co.wlb.debug:id/name");
-    private By etMeasure = By.id("id.co.wlb.debug:id/EtMeasure");
-    private By etRecom = By.id("id.co.wlb.debug:id/EtRecom");
-    private By startDate = By.id("id.co.wlb.debug:id/startDate");
-    private By endDate = By.id("id.co.wlb.debug:id/endDate");
-    private By competency = By.id("id.co.wlb.debug:id/competencyAutoComplete");
-    private By submitBtn = By.id("id.co.wlb.debug:id/tvSubmitBtn");
+    private By name = By.id(SettingDataWLB.APP_PACKAGE+":id/name");
+    private By etMeasure = By.id(SettingDataWLB.APP_PACKAGE+":id/EtMeasure");
+    private By etRecom = By.id(SettingDataWLB.APP_PACKAGE+":id/EtRecom");
+    private By startDate = By.id(SettingDataWLB.APP_PACKAGE+":id/startDate");
+    private By endDate = By.id(SettingDataWLB.APP_PACKAGE+":id/endDate");
+    private By competency = By.id(SettingDataWLB.APP_PACKAGE+":id/competencyAutoComplete");
+    private By submitBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/tvSubmitBtn");
     private By competencyFirst = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.RelativeLayout/android.widget.ScrollView/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.TextView");
     private By competencySecond = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.RelativeLayout/android.widget.ScrollView/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.TextView");
 

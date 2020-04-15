@@ -1,30 +1,34 @@
 package Pages;
 
+import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.functions.ExpectedCondition;
+import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TalentPage extends HomePage {
     AppiumDriver<MobileElement> driver;
-    private By name = By.id("id.co.wlb.debug:id/name");
-    private By position = By.id("id.co.wlb.debug:id/position");
-    private By userPhoto = By.id("id.co.wlb.debug:id/avatar");
-    private By riskOfLoss = By.id("id.co.wlb.debug:id/riskOfLoseLevel");
-    private By impactOfLoss = By.id("id.co.wlb.debug:id/impactOfLoseLevel");
-    private By futureLeader = By.id("id.co.wlb.debug:id/futureLeaderLevel");
-    private By talentMobilityReason = By.id("id.co.wlb.debug:id/reason");
-    private By editTalentInformationBtn = By.id("id.co.wlb.debug:id/editTalent");
-    private By seeAllBadgesBtn = By.id("id.co.wlb.debug:id/seeAllBadge");
-    private By badgeName = By.id("id.co.wlb.debug:id/namaBadge");
-    private By badgeVersion = By.id("id.co.wlb.debug:id/versionBadge");
-    private By userValue = By.id("id.co.wlb.debug:id/nilaiUser");
-    private By potCompetency = By.id("id.co.wlb.debug:id/potCompetency");
-    private By potAttendance = By.id("id.co.wlb.debug:id/potAttendance");
-    private By pitTask = By.id("id.co.wlb.debug:id/pitTask");
-    private By pitOGF = By.id(("id.co.wlb.debug:id/pitOGF"));
-    private By pitMultirater = By.id("id.co.wlb.debug:id/pitMultirater");
+    private By name = By.id(SettingDataWLB.APP_PACKAGE+":id/name");
+    private By position = By.id(SettingDataWLB.APP_PACKAGE+":id/position");
+    private By userPhoto = By.id(SettingDataWLB.APP_PACKAGE+":id/avatar");
+    private By riskOfLoss = By.id(SettingDataWLB.APP_PACKAGE+":id/riskOfLoseLevel");
+    private By impactOfLoss = By.id(SettingDataWLB.APP_PACKAGE+":id/impactOfLoseLevel");
+    private By futureLeader = By.id(SettingDataWLB.APP_PACKAGE+":id/futureLeaderLevel");
+    private By talentMobilityReason = By.id(SettingDataWLB.APP_PACKAGE+":id/reason");
+    private By editTalentInformationBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/editTalent");
+    private By seeAllBadgesBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/seeAllBadge");
+    private By badgeName = By.id(SettingDataWLB.APP_PACKAGE+":id/namaBadge");
+    private By badgeVersion = By.id(SettingDataWLB.APP_PACKAGE+":id/versionBadge");
+    private By userValue = By.id(SettingDataWLB.APP_PACKAGE+":id/nilaiUser");
+    private By potCompetency = By.id(SettingDataWLB.APP_PACKAGE+":id/potCompetency");
+    private By potAttendance = By.id(SettingDataWLB.APP_PACKAGE+":id/potAttendance");
+    private By pitTask = By.id(SettingDataWLB.APP_PACKAGE+":id/pitTask");
+    private By pitOGF = By.id((SettingDataWLB.APP_PACKAGE+":id/pitOGF"));
+    private By pitMultirater = By.id(SettingDataWLB.APP_PACKAGE+":id/pitMultirater");
     private By developmentPlanBtn = By.xpath("//androidx.appcompat.app.ActionBar.Tab[@content-desc=\"Development Plan\"]/android.widget.TextView");
     private By aspirationBtn = By.xpath("//androidx.appcompat.app.ActionBar.Tab[@content-desc=\"Aspiration\"]/android.widget.TextView");
     private By addNewDevelopmentPlanBtn = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout");
@@ -35,6 +39,20 @@ public class TalentPage extends HomePage {
     public TalentPage(AppiumDriver<MobileElement> driver){
         super(driver);
         this.driver = driver;
+    }
+
+    public By getTalentMobilityReasonBy(){
+        return talentMobilityReason;
+    }
+
+    public void waitForMobilityChanged(final String newMobility){
+        new WebDriverWait(this.driver, 30)
+                .until(new ExpectedCondition<Boolean>() {
+                    @NullableDecl
+                    public Boolean apply(@NullableDecl WebDriver webDriver) {
+                        return webDriver.findElement(getTalentMobilityReasonBy()).getText().equals(newMobility);
+                    }
+                });
     }
 
     public MobileElement getDevelopmentPlanDate(){
@@ -131,7 +149,20 @@ public class TalentPage extends HomePage {
 
     public void waitForTalentPageShow(){
         new WebDriverWait(this.driver, 30)
-                .until(ExpectedConditions.presenceOfElementLocated(name));
+                .until(new ExpectedCondition<Boolean>() {
+                    @NullableDecl
+                    public Boolean apply(@NullableDecl WebDriver webDriver) {
+                        return !webDriver.findElement(riskOfLoss).getText().equals("-");
+                    }
+                });
+    }
+
+    @Override
+    public void showTalentPage(){
+        waitforHomePageShowed();
+        clickShowMenuButton();
+        clickTalentMenuButton();
+        waitForTalentPageShow();
     }
 
     public void waitForTalentPageShowAfterAddDevelopmentPlan(){
@@ -143,10 +174,10 @@ public class TalentPage extends HomePage {
         return driver.findElement(developmentPlanNameFirstArray);
     }
 
-    public void scrolToBottom() {
+    public void scrollToBottom() {
         // scroll to bottom
-        for (int i = 0; i < 2; i++) {
-            scroll(600, 2249, 600, 2);
+        for (int i = 0; i < 3; i++) {
+            scroll(600, 2049, 600, 100);
         }
     }
 }

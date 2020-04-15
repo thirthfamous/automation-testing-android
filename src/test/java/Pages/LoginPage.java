@@ -1,5 +1,6 @@
 package Pages;
 
+import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
@@ -9,10 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class LoginPage {
 
     AppiumDriver<MobileElement> driver;
-    By emailForm = By.id("id.co.wlb.debug:id/etEmail");
-    By passwordForm = By.id("id.co.wlb.debug:id/etPassword");
-    By snackbarValid = By.id("id.co.wlb.debug:id/snackbar_text");
-    By loginBtn = By.id("id.co.wlb.debug:id/btn_login");
+    By emailForm = By.id(SettingDataWLB.APP_PACKAGE+":id/etEmail");
+    By passwordForm = By.id(SettingDataWLB.APP_PACKAGE+":id/etPassword");
+    By snackbarValid = By.id(SettingDataWLB.APP_PACKAGE+":id/snackbar_text");
+    By loginBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/btn_login");
 
     public LoginPage(AppiumDriver<MobileElement> driver){
         this.driver = driver;

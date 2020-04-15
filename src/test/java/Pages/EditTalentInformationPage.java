@@ -1,20 +1,22 @@
 package Pages;
 
+import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 
-public class EditTalentInformationPage {
+public class EditTalentInformationPage extends TalentPage{
     AppiumDriver<MobileElement> driver;
-    By submitBtn = By.id("id.co.wlb.debug:id/submit");
-    By riskOfLossSpinner = By.id("id.co.wlb.debug:id/riskOfLossSp");
-    By impactOfLossSpinner = By.id("id.co.wlb.debug:id/impackOfLossSp");
-    By futureLeaderSpinner = By.id("id.co.wlb.debug:id/futureLeaderSp");
-    By talentMobilityTextArea = By.id("id.co.wlb.debug:id/description");
+    By submitBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/submit");
+    By riskOfLossSpinner = By.id(SettingDataWLB.APP_PACKAGE+":id/riskOfLossSp");
+    By impactOfLossSpinner = By.id(SettingDataWLB.APP_PACKAGE+":id/impackOfLossSp");
+    By futureLeaderSpinner = By.id(SettingDataWLB.APP_PACKAGE+":id/futureLeaderSp");
+    By talentMobilityTextArea = By.id(SettingDataWLB.APP_PACKAGE+":id/description");
 
     public EditTalentInformationPage(AppiumDriver<MobileElement> driver){
+        super(driver);
         this.driver = driver;
     }
 
