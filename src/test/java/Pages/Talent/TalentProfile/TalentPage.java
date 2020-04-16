@@ -1,5 +1,6 @@
-package Pages;
+package Pages.Talent.TalentProfile;
 
+import Pages.HomePage;
 import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -30,12 +31,18 @@ public class TalentPage extends HomePage {
     private By pitOGF = By.id((SettingDataWLB.APP_PACKAGE+":id/pitOGF"));
     private By pitMultirater = By.id(SettingDataWLB.APP_PACKAGE+":id/pitMultirater");
     private By developmentPlanBtn = By.xpath("//androidx.appcompat.app.ActionBar.Tab[@content-desc=\"Development Plan\"]/android.widget.TextView");
-    private By aspirationBtn = By.xpath("//androidx.appcompat.app.ActionBar.Tab[@content-desc=\"Aspiration\"]/android.widget.TextView");
+    private By aspirationBtn = By.xpath("//androidx.appcompat.app.ActionBar.Tab[@content-desc=\"Aspiration\"]");
     private By addNewDevelopmentPlanBtn = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout");
     private By developmentPlanNameFirstArray = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.TextView[1]");
     private By developmentPlanDate = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.TextView[2]");
     private By developmentPlanStatus = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[2]/android.widget.TextView");
-    
+    private By seeAllBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/seeAll");
+    private By addNewAspirationBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/image3");
+    private By currentPositionBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/currentPosition");
+    private By positionCurrent = By.id(SettingDataWLB.APP_PACKAGE+":id/positionCurrent");
+    private By firstArrayAspirationSuggestedPositionName = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.TextView");
+
+
     public TalentPage(AppiumDriver<MobileElement> driver){
         super(driver);
         this.driver = driver;
@@ -85,6 +92,16 @@ public class TalentPage extends HomePage {
 
     public MobileElement getFutureLeader() {
         return driver.findElement(futureLeader);
+    }
+
+    public MobileElement getFirstArrayAspirationSuggestedPositionName(){
+        return driver.findElement(firstArrayAspirationSuggestedPositionName);
+    }
+
+    public String clickFirstArrayAspirationSuggestedPositionName(){
+        String name = getFirstArrayAspirationSuggestedPositionName().getText();
+        getFirstArrayAspirationSuggestedPositionName().click();
+        return name;
     }
 
     public MobileElement getTalentMobility() {
@@ -143,6 +160,33 @@ public class TalentPage extends HomePage {
         return driver.findElement(aspirationBtn);
     }
 
+    public MobileElement getAddNewAspirationBtn(){
+        return driver.findElement(addNewAspirationBtn);
+    }
+
+    public void showAddAspirationForm(){
+        getApirationBtn().click();
+        getAddNewAspirationBtn().click();
+    }
+
+    public MobileElement getCurrentPositionBtn(){
+        return driver.findElement(currentPositionBtn);
+    }
+
+    public MobileElement getPositionCurrent(){
+        return driver.findElement(positionCurrent);
+    }
+
+    public String clickPositionCurrent(){
+        String positionCurrent = getPositionCurrent().getText();
+        getPositionCurrent().click();
+        return positionCurrent;
+    }
+
+
+    public MobileElement getSeeAllBtn(){
+        return driver.findElement(seeAllBtn);
+    }
     public void clickTalentInformation() {
         driver.findElement(editTalentInformationBtn).click();
     }
@@ -153,6 +197,40 @@ public class TalentPage extends HomePage {
                     @NullableDecl
                     public Boolean apply(@NullableDecl WebDriver webDriver) {
                         return !webDriver.findElement(riskOfLoss).getText().equals("-");
+                    }
+                });
+    }
+
+    public void waitForFirstArraySuggestedPositionChanged(final String aspirationJob){
+        new WebDriverWait(this.driver, 30)
+                .until(new ExpectedCondition<Boolean>() {
+                    @NullableDecl
+                    public Boolean apply(@NullableDecl WebDriver webDriver) {
+                        return webDriver.findElement(firstArrayAspirationSuggestedPositionName)
+                                .getText().equals(aspirationJob);
+                    }
+                });
+    }
+
+    public void waitForFirstArraySuggestedPositionDeleted(final String aspirationJob){
+        new WebDriverWait(this.driver, 30)
+                .until(new ExpectedCondition<Boolean>() {
+                    @NullableDecl
+                    public Boolean apply(@NullableDecl WebDriver webDriver) {
+                        return !webDriver.findElement(firstArrayAspirationSuggestedPositionName)
+                                .getText().equals(aspirationJob);
+                    }
+                });
+    }
+
+    public void waitForFirstTalentDevelopmentPlanArrayDeleted(final String before){
+        new WebDriverWait(this.driver, 30)
+                .until(ExpectedConditions.presenceOfElementLocated(developmentPlanNameFirstArray));
+        new WebDriverWait(this.driver, 30)
+                .until(new ExpectedCondition<Boolean>() {
+                    @NullableDecl
+                    public Boolean apply(@NullableDecl WebDriver webDriver) {
+                        return !webDriver.findElement(developmentPlanNameFirstArray).getText().equals(before);
                     }
                 });
     }
@@ -170,6 +248,7 @@ public class TalentPage extends HomePage {
                 .until(ExpectedConditions.presenceOfElementLocated(developmentPlanNameFirstArray));
     }
 
+
     public MobileElement getDevelopmentPlanNameFirstArray(){
         return driver.findElement(developmentPlanNameFirstArray);
     }
@@ -179,5 +258,17 @@ public class TalentPage extends HomePage {
         for (int i = 0; i < 3; i++) {
             scroll(600, 2049, 600, 100);
         }
+    }
+
+    public void clickSeeAllDevelopmentPlan() {
+        scrollToBottom();
+        getSeeAllBtn().click();
+    }
+
+    public void clickSeeAllSuggestedPosition() {
+        scrollToBottom();
+        getApirationBtn().click();
+        getSeeAllBtn().click();
+
     }
 }

@@ -1,5 +1,6 @@
-package Pages;
+package Pages.Talent.TalentProfile;
 
+import Pages.HomePage;
 import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -9,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-public class TalentNewDevelopmentPlanPage extends HomePage{
+public class TalentNewDevelopmentPlanPage extends HomePage {
 
     AppiumDriver<MobileElement> driver;
     private By name = By.id(SettingDataWLB.APP_PACKAGE+":id/name");

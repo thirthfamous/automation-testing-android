@@ -1,4 +1,4 @@
-package Pages;
+package Pages.Talent.TalentProfile;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;

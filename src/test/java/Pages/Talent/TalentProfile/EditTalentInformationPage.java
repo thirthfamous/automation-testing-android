@@ -1,4 +1,4 @@
-package Pages;
+package Pages.Talent.TalentProfile;
 
 import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;

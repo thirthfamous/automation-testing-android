@@ -1,5 +1,6 @@
-package Pages;
+package Pages.Talent.TalentProfile;
 
+import Pages.HomePage;
 import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
