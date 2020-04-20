@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class TalentNewDevelopmentPlanPage extends HomePage {
 
     AppiumDriver<MobileElement> driver;
-    private By name = By.id(SettingDataWLB.APP_PACKAGE+":id/name");
+    protected By name = By.id(SettingDataWLB.APP_PACKAGE+":id/name");
     private By etMeasure = By.id(SettingDataWLB.APP_PACKAGE+":id/EtMeasure");
     private By etRecom = By.id(SettingDataWLB.APP_PACKAGE+":id/EtRecom");
     private By startDate = By.id(SettingDataWLB.APP_PACKAGE+":id/startDate");
@@ -29,6 +29,7 @@ public class TalentNewDevelopmentPlanPage extends HomePage {
     }
 
     public HashMap<String, String> fillAllForm(){
+        waitUntilElementExist(driver, this.name);
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("name",fillName("Development Plan Name at"));
         map.put("measure", fillMeasureOfSuccess("Measure of Success at"));
@@ -41,6 +42,32 @@ public class TalentNewDevelopmentPlanPage extends HomePage {
         map.put("firstCompetency", getCompetencyFirst().getText());
         map.put("secondCompetency", getCompetencySecond().getText());
         return map;
+    }
+    public HashMap<String, String> fillAllFormMyTeam(){
+        waitUntilElementExist(driver, this.name);
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("name",fillName("Development Plan Name at"));
+        map.put("measure", fillMeasureOfSuccess("Measure of Success at"));
+        map.put("recommended", fillRecommendedEmployeeAction("Recommended Employee Action at"));
+        scroll(600, 2249, 600, 2);
+        map.put("startDate", clickStartDateAndSet());
+        map.put("endDate", clickEndDateAndSet());
+        setCompetency(477,800);
+        setCompetency(477,943);
+        scroll(635, 1000, 740, 501);
+        map.put("firstCompetency", getCompetencyFirst().getText());
+        map.put("secondCompetency", getCompetencySecond().getText());
+        return map;
+    }
+
+    public String fillRecommendedEmployeeAction(String name) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String data = name+" "+formatter.format(date);
+        getEtRecom().clear();
+        getEtRecom().sendKeys(data);
+        driver.hideKeyboard();
+        return data;
     }
 
     public String fillName(String name){

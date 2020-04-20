@@ -1,5 +1,6 @@
 package MainTests.TalentTest;
 
+import Pages.Talent.TalentMyTeam.TalentMyTeamPage;
 import Pages.Talent.TalentProfile.*;
 import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
@@ -14,8 +15,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-public class TalentProfileTest {
+public class TalentMyTeamTest {
     AppiumDriver<MobileElement> driver;
+    TalentMyTeamPage talentMyTeamPage;
     TalentPage talentPage;
     boolean potCompetency = true;
     boolean potAttendance = true;
@@ -29,32 +31,22 @@ public class TalentProfileTest {
     @BeforeEach
     public void setUp() throws MalformedURLException {
         setupBefore();
+        setUpUntilClickSecondArray();
     }
 
     @Test
-    public void CheckIfTalentPageExistTest(){
+    public void ShowMyTeamPageTest(){
         talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
-
-        Assertions.assertTrue(true);;
+        talentPage.showMyTeamTalentPage();
+        Assertions.assertTrue(true);
     }
 
     @Test
     public void CheckUserNamePositionImageTest(){
-        talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
 
-        Assertions.assertTrue(!talentPage.getUserName().getText().equals(""));
-        Assertions.assertTrue(!talentPage.getUserPosition().getText().equals(""));
+        Assertions.assertTrue(!talentPage.getUserName().getText().equals("-"));
+        Assertions.assertTrue(!talentPage.getUserPosition().getText().equals("-"));
         Assertions.assertTrue(talentPage.getUserImage().isDisplayed());
-    }
-
-    @Test
-    public void CheckTalentInformationTest(){
-        talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
-        talentPage.waitForTalentPageShow();
-
         Assertions.assertTrue(!talentPage.getRiskOfLoss().getText().equals("-"));
         Assertions.assertTrue(!talentPage.getImpactOfLoss().getText().equals("-"));
         Assertions.assertTrue(!talentPage.getFutureLeader().getText().equals("-"));
@@ -63,8 +55,6 @@ public class TalentProfileTest {
 
     @Test
     public void EditTalentInformationTest(){
-        talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
         String talentMobility = talentPage.getTalentMobility().getText()+"b";
 
         talentPage.clickTalentInformation();
@@ -93,9 +83,6 @@ public class TalentProfileTest {
 
     @Test
     public void CheckBadgeTest(){
-        talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
-        talentPage.waitForTalentPageShow();
         talentPage.scroll(600, 2249, 600, 2);
         Assertions.assertTrue(!talentPage.getBadgeName().getText().equals(""));
         Assertions.assertTrue(!talentPage.getBadgeVersion().getText().equals(""));
@@ -107,8 +94,6 @@ public class TalentProfileTest {
     @Test
     public void CheckBadgeDetailsTest(){
         talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
-        talentPage.waitForTalentPageShow();
         talentPage.getSeeAllBadgesBtn().click();
 
         TalentSeeAllBadgesPage talentSeeAllBadgesPage = new TalentSeeAllBadgesPage(driver);
@@ -127,11 +112,16 @@ public class TalentProfileTest {
     public void EditDevelopmentPlanTest(){
         addNewDevelopment();
         setupBefore();
+        setUpUntilClickSecondArray();
+
         TalentPlanDetailsPage talentPlanDetailsPage = new TalentPlanDetailsPage(driver);
-        talentPlanDetailsPage.showEditPlanForm();
+        talentPlanDetailsPage.scrollToBottom();
+        talentPlanDetailsPage.getdevelopmentPlanNameFirstArrayMyTeam().click();
+        talentPlanDetailsPage.getMoreBtn().click();
+        talentPlanDetailsPage.clickSomewhere(846, 341);
 
         TalentPlanDetailsEditPlan talentPlanDetailsEditPlan = new TalentPlanDetailsEditPlan(driver);
-        HashMap<String, String> developmentPlan = talentPlanDetailsEditPlan.fillAllForm();
+        HashMap<String, String> developmentPlan = talentPlanDetailsEditPlan.fillAllFormMyTeam();
         talentPlanDetailsEditPlan.getSubmitBtn().click();
 
         talentPlanDetailsPage.waitForTalentPlanDetailsPageLoaded();
@@ -139,8 +129,8 @@ public class TalentProfileTest {
         Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
                 .getText().equals(developmentPlan.get("name")));
 
-        Assertions.assertTrue(talentPlanDetailsPage.getStatusWaiting()
-                            .getText().equals("Waiting"));
+        Assertions.assertTrue(talentPlanDetailsPage.getStatusDone()
+                            .getText().equals("Done"));
 
         Assertions.assertTrue((talentPlanDetailsPage.getPlanDate()
                 .getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") )));
@@ -148,11 +138,15 @@ public class TalentProfileTest {
         Assertions.assertTrue(talentPlanDetailsPage.getMeasureOfSuccess()
                 .getText().equals(developmentPlan.get("measure")));
 
+        Assertions.assertTrue(talentPlanDetailsPage.getRecommedationOfEmpAct()
+                .getText().equals(developmentPlan.get("recommended")));
+
         Assertions.assertTrue(talentPlanDetailsPage.verifyCompetency(developmentPlan.get("firstCompetency")));
     }
 
     @Test
     public void EditDevelopmentPlanFromSeeAllTest(){
+        // Start here
         addNewDevelopment();
         setupBefore();
         TalentPage talentPage = new TalentPage(driver);
@@ -191,10 +185,14 @@ public class TalentProfileTest {
     public void DeleteDevelopmentPlanTest(){
         addNewDevelopment();
         setupBefore();
+
+
         TalentPlanDetailsPage talentPlanDetailsPage = new TalentPlanDetailsPage(driver);
-        talentPlanDetailsPage.showPlanDetails();
+        talentPlanDetailsPage.scrollToBottom();
         String before = talentPlanDetailsPage.getPlanTitle().getText();
+        talentPlanDetailsPage.getdevelopmentPlanNameFirstArrayMyTeam().click();
         talentPlanDetailsPage.getMoreBtn().click();
+
         talentPlanDetailsPage.deleteDevelopmentPlan();
 
         TalentPage talentPage = new TalentPage(driver);
@@ -339,27 +337,30 @@ public class TalentProfileTest {
         Assertions.assertTrue(true);
     }
 
-
     @AfterEach
     public void tearDown() {
         System.out.println("Testing Finished");
         driver.quit();
     }
 
+    private void setUpUntilClickSecondArray(){
+        talentPage = new TalentPage(driver);
+        talentPage.showMyTeamTalentPage();
 
-    private void addNewAspiration() {
-        TalentPage talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
-        talentPage.scrollToBottom();
-        talentPage.showAddAspirationForm();
+        talentMyTeamPage = new TalentMyTeamPage(driver);
+        talentMyTeamPage.clickSecondArrayOfMyTeamList();
+        talentPage.waitForTalentPageShow();
+    }
 
-        TalentAddAspirationForm talentAddAspirationForm = new TalentAddAspirationForm(driver);
-        String aspirationJob = talentAddAspirationForm.chooseAspirationJob();
-        talentAddAspirationForm.choosePlanDate();
-        talentAddAspirationForm.getSubmitBtn().click();
-
-        talentPage.waitForFirstArraySuggestedPositionChanged(aspirationJob);
-        Assertions.assertTrue(true);
+    private void setupBefore() {
+        DesiredCapabilities cap = SettingDataWLB.createLoggedInDesiredCabability();
+        URL url = null;
+        try {
+            url = SettingDataWLB.createURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        driver = new AppiumDriver<MobileElement>(url, cap);
     }
     private void testBadgePotentialPerformance(boolean potCompetency, boolean potAttendance, boolean potCourse, boolean potSosmed, boolean pitTask, boolean pitOgf, boolean pitMultirater, boolean pitNps, TalentPage page ){
         if(potCompetency){
@@ -389,25 +390,23 @@ public class TalentProfileTest {
     }
     private void addNewDevelopment() {
         talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
-        talentPage.waitForTalentPageShow();
 
         talentPage.scrollToBottom();
 
-        talentPage.getaddNewDevelopmentPlanBtn().click();
+        talentPage.getAddNewDevelopmentPlanBtnMyTeam().click();
         TalentNewDevelopmentPlanPage talentNewDevelopmentPlanPage = new TalentNewDevelopmentPlanPage(driver);
-        HashMap<String, String> developmentPlan = talentNewDevelopmentPlanPage.fillAllForm();
+        HashMap<String, String> developmentPlan = talentNewDevelopmentPlanPage.fillAllFormMyTeam();
         talentNewDevelopmentPlanPage.getSubmitBtn().click();
 
         talentPage = new TalentPage(driver);
-        talentPage.waitForTalentPageShowAfterAddDevelopmentPlan();
-        Assertions.assertTrue(talentPage.getDevelopmentPlanNameFirstArray()
+        talentPage.waitForTalentPageShowAfterAddDevelopmentPlanMyTeam();
+        Assertions.assertTrue(talentPage.getdevelopmentPlanNameFirstArrayMyTeam()
                 .getText().equals(developmentPlan.get("name")));
-        Assertions.assertTrue(talentPage.getDevelopmentPlanDate().getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") ));
-        Assertions.assertTrue(talentPage.getDevelopmentPlanStatus().getText().equals("Waiting"));
+        Assertions.assertTrue(talentPage.getDevelopmentPlanDateMyTeam().getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") ));
+        Assertions.assertTrue(talentPage.getDevelopmentPlanStatusMyTeam().getText().equals("Waiting"));
 
 
-        talentPage.getDevelopmentPlanNameFirstArray().click();
+        talentPage.getdevelopmentPlanNameFirstArrayMyTeam().click();
 
         TalentPlanDetailsPage talentPlanDetailsPage = new TalentPlanDetailsPage(driver);
         Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
@@ -422,18 +421,23 @@ public class TalentProfileTest {
         Assertions.assertTrue(talentPlanDetailsPage.getMeasureOfSuccess()
                 .getText().equals(developmentPlan.get("measure")));
 
+        Assertions.assertTrue(talentPlanDetailsPage.getRecommedationOfEmpAct()
+                .getText().equals(developmentPlan.get("recommended")));
+
         Assertions.assertTrue(talentPlanDetailsPage.verifyCompetency(developmentPlan.get("firstCompetency")));
     }
-    private void setupBefore() {
-        DesiredCapabilities cap = SettingDataWLB.createLoggedInDesiredCabability();
-        URL url = null;
-        try {
-            url = SettingDataWLB.createURL();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        driver = new AppiumDriver<MobileElement>(url, cap);
+    private void addNewAspiration() {
+        TalentPage talentPage = new TalentPage(driver);
+        talentPage.showTalentPage();
+        talentPage.scrollToBottom();
+        talentPage.showAddAspirationForm();
 
-        System.out.println("------- Testing Homepage Started --------");
+        TalentAddAspirationForm talentAddAspirationForm = new TalentAddAspirationForm(driver);
+        String aspirationJob = talentAddAspirationForm.chooseAspirationJob();
+        talentAddAspirationForm.choosePlanDate();
+        talentAddAspirationForm.getSubmitBtn().click();
+
+        talentPage.waitForFirstArraySuggestedPositionChanged(aspirationJob);
+        Assertions.assertTrue(true);
     }
 }

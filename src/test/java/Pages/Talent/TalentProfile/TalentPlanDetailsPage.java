@@ -10,8 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class TalentPlanDetailsPage extends TalentPage {
 
     private By statusWaiting = By.id(SettingDataWLB.APP_PACKAGE+":id/statusWaiting");
+    private By statusDone = By.id(SettingDataWLB.APP_PACKAGE+":id/statusDone");
     private By planTitle = By.id(SettingDataWLB.APP_PACKAGE+":id/planTitle");
     private By measureOfSuccess = By.id(SettingDataWLB.APP_PACKAGE+":id/measureOfSucess");
+    private By recommedationOfEmpAct = By.id(SettingDataWLB.APP_PACKAGE+":id/recommedEmployee");
     private By competencyFirstArray = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.LinearLayout/android.widget.TextView");
     private By competencySecondArray = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[2]/android.widget.LinearLayout/android.widget.TextView");
     private By planDate = By.id(SettingDataWLB.APP_PACKAGE+":id/planDate");
@@ -26,6 +28,12 @@ public class TalentPlanDetailsPage extends TalentPage {
     public void waitForTalentPlanDetailsPageLoaded(){
         new WebDriverWait(this.driver, 30)
                 .until(ExpectedConditions.presenceOfElementLocated(planTitle));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void showPlanDetails(){
@@ -52,6 +60,10 @@ public class TalentPlanDetailsPage extends TalentPage {
         return driver.findElement(statusWaiting);
     }
 
+    public MobileElement getStatusDone(){
+        return driver.findElement(statusDone);
+    }
+
     public MobileElement getPlanTitle(){
         return driver.findElement(planTitle);
     }
@@ -60,6 +72,9 @@ public class TalentPlanDetailsPage extends TalentPage {
         return driver.findElement(measureOfSuccess);
     }
 
+    public MobileElement getRecommedationOfEmpAct(){
+        return driver.findElement(recommedationOfEmpAct);
+    }
     public MobileElement getCompetencyFirstArray(){
         return driver.findElement(competencyFirstArray);
     }
@@ -69,9 +84,6 @@ public class TalentPlanDetailsPage extends TalentPage {
     }
 
     public boolean verifyCompetency(String firstCompetency) {
-        System.out.println("first competency from arg to compare to all : "+firstCompetency);
-        System.out.println("first competency from page : "+getCompetencyFirstArray().getText());
-        System.out.println("second competency from page : "+getCompetencySecondArray().getText());
         if(firstCompetency.equals(getCompetencyFirstArray().getText())){
             return true;
         }

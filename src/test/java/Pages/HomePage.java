@@ -34,10 +34,15 @@ public class HomePage {
 
     public void clickTalentMenuButton(){
         io.appium.java_client.TouchAction action = new TouchAction(driver);
-        action.tap(new PointOption().withCoordinates(265, 1620));
+        action.tap(new PointOption().withCoordinates(275,1625));
         action.release();
         action.perform();
         System.out.println("Click Talent Menu Done");
+    }
+
+    public void waitUntilElementExist(AppiumDriver<MobileElement> driver, By element){
+        new WebDriverWait(driver, 30)
+                .until(ExpectedConditions.presenceOfElementLocated(element));
     }
 
     public void clickSomewhere(int x, int y){

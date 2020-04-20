@@ -33,15 +33,21 @@ public class TalentPage extends HomePage {
     private By developmentPlanBtn = By.xpath("//androidx.appcompat.app.ActionBar.Tab[@content-desc=\"Development Plan\"]/android.widget.TextView");
     private By aspirationBtn = By.xpath("//androidx.appcompat.app.ActionBar.Tab[@content-desc=\"Aspiration\"]");
     private By addNewDevelopmentPlanBtn = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout");
+    private By addNewDevelopmentPlanBtnMyTeam = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout");
     private By developmentPlanNameFirstArray = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.TextView[1]");
+    private By developmentPlanNameFirstArrayMyTeam = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.TextView[1]");
     private By developmentPlanDate = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.TextView[2]");
+
+    private By developmentPlanDateMyTeam = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.TextView[2]");
     private By developmentPlanStatus = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[2]/android.widget.TextView");
+    private By developmentPlanStatusMyTeam = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[2]/android.widget.TextView");
     private By seeAllBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/seeAll");
     private By addNewAspirationBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/image3");
     private By currentPositionBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/currentPosition");
     private By positionCurrent = By.id(SettingDataWLB.APP_PACKAGE+":id/positionCurrent");
     private By firstArrayAspirationSuggestedPositionName = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.TextView");
-
+    private By tvTitleTalent = By.id(SettingDataWLB.APP_PACKAGE+":id/tvTitleTalent");
+    private By cvItemMyTeam = By.id(SettingDataWLB.APP_PACKAGE+":id/cv_item_myteam");
 
     public TalentPage(AppiumDriver<MobileElement> driver){
         super(driver);
@@ -66,8 +72,16 @@ public class TalentPage extends HomePage {
         return driver.findElement(developmentPlanDate);
     }
 
+    public MobileElement getDevelopmentPlanDateMyTeam(){
+        return driver.findElement(developmentPlanDateMyTeam);
+    }
+
     public MobileElement getDevelopmentPlanStatus(){
         return driver.findElement(developmentPlanStatus);
+    }
+
+    public MobileElement getDevelopmentPlanStatusMyTeam(){
+        return driver.findElement(developmentPlanStatusMyTeam);
     }
 
     public MobileElement getUserName() {
@@ -96,6 +110,10 @@ public class TalentPage extends HomePage {
 
     public MobileElement getFirstArrayAspirationSuggestedPositionName(){
         return driver.findElement(firstArrayAspirationSuggestedPositionName);
+    }
+
+    public MobileElement getAddNewDevelopmentPlanBtnMyTeam(){
+        return driver.findElement(addNewDevelopmentPlanBtnMyTeam);
     }
 
     public String clickFirstArrayAspirationSuggestedPositionName(){
@@ -162,6 +180,10 @@ public class TalentPage extends HomePage {
 
     public MobileElement getAddNewAspirationBtn(){
         return driver.findElement(addNewAspirationBtn);
+    }
+
+    public MobileElement getCvItemMyTeam(){
+        return driver.findElement(cvItemMyTeam);
     }
 
     public void showAddAspirationForm(){
@@ -248,9 +270,22 @@ public class TalentPage extends HomePage {
                 .until(ExpectedConditions.presenceOfElementLocated(developmentPlanNameFirstArray));
     }
 
+    public void waitForTalentPageShowAfterAddDevelopmentPlanMyTeam(){
+        new WebDriverWait(this.driver, 30)
+                .until(ExpectedConditions.presenceOfElementLocated(developmentPlanNameFirstArrayMyTeam));
+    }
+
 
     public MobileElement getDevelopmentPlanNameFirstArray(){
         return driver.findElement(developmentPlanNameFirstArray);
+    }
+
+    public MobileElement getdevelopmentPlanNameFirstArrayMyTeam(){
+        return driver.findElement(developmentPlanNameFirstArrayMyTeam);
+    }
+
+    public MobileElement getTvTitleTalent(){
+        return driver.findElement(tvTitleTalent);
     }
 
     public void scrollToBottom() {
@@ -269,6 +304,14 @@ public class TalentPage extends HomePage {
         scrollToBottom();
         getApirationBtn().click();
         getSeeAllBtn().click();
-
     }
+
+    public void showMyTeamTalentPage(){
+        showTalentPage();
+        getTvTitleTalent().click();
+        new WebDriverWait(this.driver, 30)
+                .until(ExpectedConditions.presenceOfElementLocated(cvItemMyTeam));
+        getCvItemMyTeam().click();
+    }
+
 }
