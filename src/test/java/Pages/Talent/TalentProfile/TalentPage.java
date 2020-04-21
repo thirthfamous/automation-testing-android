@@ -46,6 +46,7 @@ public class TalentPage extends HomePage {
     private By currentPositionBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/currentPosition");
     private By positionCurrent = By.id(SettingDataWLB.APP_PACKAGE+":id/positionCurrent");
     private By firstArrayAspirationSuggestedPositionName = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.TextView");
+    private By firstArrayAspirationSuggestedPositionNameMyTeam = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/androidx.viewpager.widget.ViewPager/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.TextView");
     private By tvTitleTalent = By.id(SettingDataWLB.APP_PACKAGE+":id/tvTitleTalent");
     private By cvItemMyTeam = By.id(SettingDataWLB.APP_PACKAGE+":id/cv_item_myteam");
 
@@ -112,6 +113,10 @@ public class TalentPage extends HomePage {
         return driver.findElement(firstArrayAspirationSuggestedPositionName);
     }
 
+    public MobileElement getFirstArrayAspirationSuggestedPositionNameMyTeam(){
+        return driver.findElement(firstArrayAspirationSuggestedPositionNameMyTeam);
+    }
+
     public MobileElement getAddNewDevelopmentPlanBtnMyTeam(){
         return driver.findElement(addNewDevelopmentPlanBtnMyTeam);
     }
@@ -119,6 +124,12 @@ public class TalentPage extends HomePage {
     public String clickFirstArrayAspirationSuggestedPositionName(){
         String name = getFirstArrayAspirationSuggestedPositionName().getText();
         getFirstArrayAspirationSuggestedPositionName().click();
+        return name;
+    }
+
+    public String clickFirstArrayAspirationSuggestedPositionNameMyTeam(){
+        String name = getFirstArrayAspirationSuggestedPositionNameMyTeam().getText();
+        getFirstArrayAspirationSuggestedPositionNameMyTeam().click();
         return name;
     }
 
@@ -234,12 +245,35 @@ public class TalentPage extends HomePage {
                 });
     }
 
+    public void waitForFirstArraySuggestedPositionChangedMyTeam(final String aspirationJob){
+        new WebDriverWait(this.driver, 30)
+                .until(new ExpectedCondition<Boolean>() {
+                    @NullableDecl
+                    public Boolean apply(@NullableDecl WebDriver webDriver) {
+                        return webDriver.findElement(firstArrayAspirationSuggestedPositionNameMyTeam)
+                                .getText().equals(aspirationJob);
+                    }
+                });
+    }
+
+
     public void waitForFirstArraySuggestedPositionDeleted(final String aspirationJob){
         new WebDriverWait(this.driver, 30)
                 .until(new ExpectedCondition<Boolean>() {
                     @NullableDecl
                     public Boolean apply(@NullableDecl WebDriver webDriver) {
                         return !webDriver.findElement(firstArrayAspirationSuggestedPositionName)
+                                .getText().equals(aspirationJob);
+                    }
+                });
+    }
+
+    public void waitForFirstArraySuggestedPositionDeletedMyTeam(final String aspirationJob){
+        new WebDriverWait(this.driver, 30)
+                .until(new ExpectedCondition<Boolean>() {
+                    @NullableDecl
+                    public Boolean apply(@NullableDecl WebDriver webDriver) {
+                        return !webDriver.findElement(firstArrayAspirationSuggestedPositionNameMyTeam)
                                 .getText().equals(aspirationJob);
                     }
                 });
@@ -253,6 +287,18 @@ public class TalentPage extends HomePage {
                     @NullableDecl
                     public Boolean apply(@NullableDecl WebDriver webDriver) {
                         return !webDriver.findElement(developmentPlanNameFirstArray).getText().equals(before);
+                    }
+                });
+    }
+
+    public void waitForFirstTalentDevelopmentPlanArrayDeletedMyTeam(final String before){
+        new WebDriverWait(this.driver, 30)
+                .until(ExpectedConditions.presenceOfElementLocated(developmentPlanNameFirstArrayMyTeam));
+        new WebDriverWait(this.driver, 30)
+                .until(new ExpectedCondition<Boolean>() {
+                    @NullableDecl
+                    public Boolean apply(@NullableDecl WebDriver webDriver) {
+                        return !webDriver.findElement(developmentPlanNameFirstArrayMyTeam).getText().equals(before);
                     }
                 });
     }

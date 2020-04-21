@@ -146,11 +146,11 @@ public class TalentMyTeamTest {
 
     @Test
     public void EditDevelopmentPlanFromSeeAllTest(){
-        // Start here
         addNewDevelopment();
         setupBefore();
+        setUpUntilClickSecondArray();
+
         TalentPage talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
         talentPage.clickSeeAllDevelopmentPlan();
 
         TalentSeeAllDevelopmentPlanPage talentSeeAllDevelopmentPlanPage = new TalentSeeAllDevelopmentPlanPage(driver);
@@ -161,7 +161,7 @@ public class TalentMyTeamTest {
         talentPlanDetailsPage.clickSomewhere(846, 341);
 
         TalentPlanDetailsEditPlan talentPlanDetailsEditPlan = new TalentPlanDetailsEditPlan(driver);
-        HashMap<String, String> developmentPlan = talentPlanDetailsEditPlan.fillAllForm();
+        HashMap<String, String> developmentPlan = talentPlanDetailsEditPlan.fillAllFormMyTeam();
         talentPlanDetailsEditPlan.getSubmitBtn().click();
 
         talentPlanDetailsPage.waitForTalentPlanDetailsPageLoaded();
@@ -169,14 +169,17 @@ public class TalentMyTeamTest {
         Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
                 .getText().equals(developmentPlan.get("name")));
 
-        Assertions.assertTrue(talentPlanDetailsPage.getStatusWaiting()
-                            .getText().equals("Waiting"));
+        Assertions.assertTrue(talentPlanDetailsPage.getStatusDone()
+                            .getText().equals("Done"));
 
         Assertions.assertTrue((talentPlanDetailsPage.getPlanDate()
                 .getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") )));
 
         Assertions.assertTrue(talentPlanDetailsPage.getMeasureOfSuccess()
                 .getText().equals(developmentPlan.get("measure")));
+
+        Assertions.assertTrue(talentPlanDetailsPage.getRecommedationOfEmpAct()
+                .getText().equals(developmentPlan.get("recommended")));
 
         Assertions.assertTrue(talentPlanDetailsPage.verifyCompetency(developmentPlan.get("firstCompetency")));
     }
@@ -185,25 +188,24 @@ public class TalentMyTeamTest {
     public void DeleteDevelopmentPlanTest(){
         addNewDevelopment();
         setupBefore();
-
+        setUpUntilClickSecondArray();
 
         TalentPlanDetailsPage talentPlanDetailsPage = new TalentPlanDetailsPage(driver);
         talentPlanDetailsPage.scrollToBottom();
-        String before = talentPlanDetailsPage.getPlanTitle().getText();
         talentPlanDetailsPage.getdevelopmentPlanNameFirstArrayMyTeam().click();
+        String before = talentPlanDetailsPage.getPlanTitle().getText();
         talentPlanDetailsPage.getMoreBtn().click();
 
         talentPlanDetailsPage.deleteDevelopmentPlan();
 
         TalentPage talentPage = new TalentPage(driver);
-        talentPage.waitForFirstTalentDevelopmentPlanArrayDeleted(before);
+        talentPage.waitForFirstTalentDevelopmentPlanArrayDeletedMyTeam(before);
         Assertions.assertTrue(true);
     }
 
     @Test
     public void CheckCurrentPosition(){
         TalentPage talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
         talentPage.scrollToBottom();
         talentPage.getApirationBtn().click();
         talentPage.getCurrentPositionBtn().click();
@@ -217,10 +219,10 @@ public class TalentMyTeamTest {
     @Test
     public void CheckClickedSuggestedPosition(){
         TalentPage talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
         talentPage.scrollToBottom();
         talentPage.getApirationBtn().click();
-        String current = talentPage.clickFirstArrayAspirationSuggestedPositionName();
+
+        String current = talentPage.clickFirstArrayAspirationSuggestedPositionNameMyTeam();
 
         TalentJobProfileDetails talentJobProfileDetails = new TalentJobProfileDetails(driver);
         talentJobProfileDetails.waitForJobProfileDetailsLoaded();
@@ -236,16 +238,16 @@ public class TalentMyTeamTest {
     public void DeleteAspirationTest(){
         addNewAspiration();
         setupBefore();
+        setUpUntilClickSecondArray();
 
         TalentPage talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
         talentPage.scrollToBottom();
         talentPage.getApirationBtn().click();
-        String current = talentPage.clickFirstArrayAspirationSuggestedPositionName();
+        String current = talentPage.clickFirstArrayAspirationSuggestedPositionNameMyTeam();
 
         TalentJobProfileDetails talentJobProfileDetails = new TalentJobProfileDetails(driver);
         talentJobProfileDetails.deleteJobProfile();
-        talentJobProfileDetails.waitForFirstArraySuggestedPositionDeleted(current);
+        talentJobProfileDetails.waitForFirstArraySuggestedPositionDeletedMyTeam(current);
         Assertions.assertTrue(true);
     }
 
@@ -253,12 +255,12 @@ public class TalentMyTeamTest {
     public void EditAspirationTest(){
         addNewAspiration();
         setupBefore();
+        setUpUntilClickSecondArray();
 
         TalentPage talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
         talentPage.scrollToBottom();
         talentPage.getApirationBtn().click();
-        talentPage.clickFirstArrayAspirationSuggestedPositionName();
+        talentPage.clickFirstArrayAspirationSuggestedPositionNameMyTeam();
 
         TalentJobProfileDetails talentJobProfileDetails = new TalentJobProfileDetails(driver);
         talentJobProfileDetails.editJobProfile();
@@ -268,17 +270,14 @@ public class TalentMyTeamTest {
         talentEditAspirationForm.choosePlanDate();
         talentEditAspirationForm.getSubmitBtn().click();
 
-        talentPage.waitForFirstArraySuggestedPositionChanged(selectedAspirationJob);
+        talentPage.waitForFirstArraySuggestedPositionChangedMyTeam(selectedAspirationJob);
         Assertions.assertTrue(true);
     }
 
     @Test
     public void AddAspirationFromSeeAllBtn(){
-        addNewAspiration();
-        setupBefore();
 
         TalentPage talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
         talentPage.clickSeeAllSuggestedPosition();
 
         TalentSeeAllAspiration talentSeeAllAspiration = new TalentSeeAllAspiration(driver);
@@ -297,13 +296,14 @@ public class TalentMyTeamTest {
     public void EditAspirationSeeAllTest(){
         addNewAspiration();
         setupBefore();
+        setUpUntilClickSecondArray();
+
 
         TalentPage talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
         talentPage.clickSeeAllSuggestedPosition();
 
         TalentSeeAllAspiration talentSeeAllAspiration = new TalentSeeAllAspiration(driver);
-        String current = talentSeeAllAspiration.clickFirstArrayAspirationSuggestedPositionSeeAllName();
+        talentSeeAllAspiration.clickFirstArrayAspirationSuggestedPositionSeeAllName();
 
         TalentJobProfileDetails talentJobProfileDetails = new TalentJobProfileDetails(driver);
         talentJobProfileDetails.editJobProfile();
@@ -321,9 +321,9 @@ public class TalentMyTeamTest {
     public void deleteAspirationSeeAll(){
         addNewAspiration();
         setupBefore();
+        setUpUntilClickSecondArray();
 
         TalentPage talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
         talentPage.clickSeeAllSuggestedPosition();
 
         TalentSeeAllAspiration talentSeeAllAspiration = new TalentSeeAllAspiration(driver);
@@ -428,7 +428,6 @@ public class TalentMyTeamTest {
     }
     private void addNewAspiration() {
         TalentPage talentPage = new TalentPage(driver);
-        talentPage.showTalentPage();
         talentPage.scrollToBottom();
         talentPage.showAddAspirationForm();
 
@@ -437,7 +436,15 @@ public class TalentMyTeamTest {
         talentAddAspirationForm.choosePlanDate();
         talentAddAspirationForm.getSubmitBtn().click();
 
-        talentPage.waitForFirstArraySuggestedPositionChanged(aspirationJob);
+        talentPage.waitForFirstArraySuggestedPositionChangedMyTeam(aspirationJob);
         Assertions.assertTrue(true);
+    }
+
+    private void waitForASecond(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
