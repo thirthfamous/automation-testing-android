@@ -3,6 +3,8 @@ package Pages.Talent.TalentProfile;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TalentSeeAllDevelopmentPlanPage extends TalentPage {
 
@@ -16,6 +18,8 @@ public class TalentSeeAllDevelopmentPlanPage extends TalentPage {
     }
 
     public void clickFirstArrayOfDevelopmentPlan(){
+        new WebDriverWait(this.driver, 30)
+                .until(ExpectedConditions.presenceOfElementLocated(firstArrayDevelopmentPlanName));
         getFirstArrayDevelopmentPlanName().click();
     }
 

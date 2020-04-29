@@ -3,7 +3,10 @@ package Pages.Talent.TalentProfile;
 import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.functions.ExpectedCondition;
+import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -14,8 +17,8 @@ public class TalentPlanDetailsPage extends TalentPage {
     private By planTitle = By.id(SettingDataWLB.APP_PACKAGE+":id/planTitle");
     private By measureOfSuccess = By.id(SettingDataWLB.APP_PACKAGE+":id/measureOfSucess");
     private By recommedationOfEmpAct = By.id(SettingDataWLB.APP_PACKAGE+":id/recommedEmployee");
-    private By competencyFirstArray = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.LinearLayout/android.widget.TextView");
-    private By competencySecondArray = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[2]/android.widget.LinearLayout/android.widget.TextView");
+    private By competencyFirstArray = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.LinearLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.LinearLayout/android.widget.TextView");
+    private By competencySecondArray = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.LinearLayout/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[2]/android.widget.LinearLayout/android.widget.TextView");
     private By planDate = By.id(SettingDataWLB.APP_PACKAGE+":id/planDate");
     private By moreBtn = By.id(SettingDataWLB.APP_PACKAGE+":id/more");
     private By delete = By.id(SettingDataWLB.APP_PACKAGE+":id/delete");
@@ -27,13 +30,12 @@ public class TalentPlanDetailsPage extends TalentPage {
 
     public void waitForTalentPlanDetailsPageLoaded(){
         new WebDriverWait(this.driver, 30)
-                .until(ExpectedConditions.presenceOfElementLocated(planTitle));
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+                .until(new ExpectedCondition<Boolean>() {
+                    @NullableDecl
+                    public Boolean apply(@NullableDecl WebDriver webDriver) {
+                        return !webDriver.findElement(planTitle).getText().equals("");
+                    }
+                });
     }
 
     public void showPlanDetails(){
@@ -62,6 +64,16 @@ public class TalentPlanDetailsPage extends TalentPage {
 
     public MobileElement getStatusDone(){
         return driver.findElement(statusDone);
+    }
+
+    public void waitForTalentDevelopmentPlanDetailChanged(final String expected){
+        new WebDriverWait(this.driver, 30)
+                .until(new ExpectedCondition<Boolean>() {
+                    @NullableDecl
+                    public Boolean apply(@NullableDecl WebDriver webDriver) {
+                        return webDriver.findElement(planTitle).getText().equals(expected);
+                    }
+                });
     }
 
     public MobileElement getPlanTitle(){

@@ -71,7 +71,7 @@ public class TalentNewDevelopmentPlanPage extends HomePage {
     }
 
     public String fillName(String name){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH.mm.ss");
         Date date = new Date();
         String data = name+" "+formatter.format(date);
         getName().clear();
@@ -97,9 +97,10 @@ public class TalentNewDevelopmentPlanPage extends HomePage {
     }
 
     public String fillMeasureOfSuccess(String measure){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH.mm.ss");
         Date date = new Date();
         String data = measure+" "+formatter.format(date);
+        getEtMeasure().click();
         getEtMeasure().clear();
         getEtMeasure().sendKeys(data);
         driver.hideKeyboard();

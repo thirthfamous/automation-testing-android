@@ -4,6 +4,8 @@ import helpers.SettingDataWLB;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TalentAddAspirationForm extends TalentPage {
 
@@ -23,7 +25,13 @@ public class TalentAddAspirationForm extends TalentPage {
     }
 
     public MobileElement getSpinnerCompetency(){
+        waitForSpinnerCompetency();
         return driver.findElement(spinnerCompetency);
+    }
+
+    public void waitForSpinnerCompetency(){
+        new WebDriverWait(this.driver, 30)
+                .until(ExpectedConditions.presenceOfElementLocated(spinnerCompetency));
     }
 
     public MobileElement getStartDate(){

@@ -134,19 +134,19 @@ public class TalentProfileTest {
         HashMap<String, String> developmentPlan = talentPlanDetailsEditPlan.fillAllForm();
         talentPlanDetailsEditPlan.getSubmitBtn().click();
 
-        talentPlanDetailsPage.waitForTalentPlanDetailsPageLoaded();
+        talentPlanDetailsPage.waitForTalentDevelopmentPlanDetailChanged(developmentPlan.get("name"));
 
-        Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
-                .getText().equals(developmentPlan.get("name")));
+        Assertions.assertEquals(talentPlanDetailsPage.getPlanTitle()
+                .getText(), developmentPlan.get("name"));
 
-        Assertions.assertTrue(talentPlanDetailsPage.getStatusWaiting()
-                            .getText().equals("Waiting"));
+        Assertions.assertEquals(talentPlanDetailsPage.getStatusWaiting()
+                            .getText(), "Waiting");
 
-        Assertions.assertTrue((talentPlanDetailsPage.getPlanDate()
-                .getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") )));
+        Assertions.assertEquals(talentPlanDetailsPage.getPlanDate()
+                .getText(), developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate"));
 
-        Assertions.assertTrue(talentPlanDetailsPage.getMeasureOfSuccess()
-                .getText().equals(developmentPlan.get("measure")));
+        Assertions.assertEquals(talentPlanDetailsPage.getMeasureOfSuccess()
+                .getText(), developmentPlan.get("measure"));
 
         Assertions.assertTrue(talentPlanDetailsPage.verifyCompetency(developmentPlan.get("firstCompetency")));
     }
@@ -170,7 +170,7 @@ public class TalentProfileTest {
         HashMap<String, String> developmentPlan = talentPlanDetailsEditPlan.fillAllForm();
         talentPlanDetailsEditPlan.getSubmitBtn().click();
 
-        talentPlanDetailsPage.waitForTalentPlanDetailsPageLoaded();
+        talentPlanDetailsPage.waitForTalentDevelopmentPlanDetailChanged(developmentPlan.get("name"));
 
         Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
                 .getText().equals(developmentPlan.get("name")));
@@ -354,6 +354,7 @@ public class TalentProfileTest {
         talentPage.showAddAspirationForm();
 
         TalentAddAspirationForm talentAddAspirationForm = new TalentAddAspirationForm(driver);
+        talentAddAspirationForm.waitForSpinnerCompetency();
         String aspirationJob = talentAddAspirationForm.chooseAspirationJob();
         talentAddAspirationForm.choosePlanDate();
         talentAddAspirationForm.getSubmitBtn().click();
@@ -400,9 +401,9 @@ public class TalentProfileTest {
         talentNewDevelopmentPlanPage.getSubmitBtn().click();
 
         talentPage = new TalentPage(driver);
-        talentPage.waitForTalentPageShowAfterAddDevelopmentPlan();
-        Assertions.assertTrue(talentPage.getDevelopmentPlanNameFirstArray()
-                .getText().equals(developmentPlan.get("name")));
+        talentPage.waitForFirstTalentDevelopmentPlanArrayChanged(developmentPlan.get("name"));
+        Assertions.assertEquals(talentPage.getDevelopmentPlanNameFirstArray()
+                .getText(), developmentPlan.get("name"));
         Assertions.assertTrue(talentPage.getDevelopmentPlanDate().getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") ));
         Assertions.assertTrue(talentPage.getDevelopmentPlanStatus().getText().equals("Waiting"));
 
@@ -410,8 +411,11 @@ public class TalentProfileTest {
         talentPage.getDevelopmentPlanNameFirstArray().click();
 
         TalentPlanDetailsPage talentPlanDetailsPage = new TalentPlanDetailsPage(driver);
-        Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
-                .getText().equals(developmentPlan.get("name")));
+
+        talentPlanDetailsPage.waitForTalentPlanDetailsPageLoaded();
+
+        Assertions.assertEquals(talentPlanDetailsPage.getPlanTitle()
+                .getText(), developmentPlan.get("name"));
 
         Assertions.assertTrue(talentPlanDetailsPage.getStatusWaiting()
                             .getText().equals("Waiting"));

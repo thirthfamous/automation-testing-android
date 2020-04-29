@@ -34,7 +34,7 @@ public class HomePage {
 
     public void clickTalentMenuButton(){
         io.appium.java_client.TouchAction action = new TouchAction(driver);
-        action.tap(new PointOption().withCoordinates(275,1625));
+        action.tap(new PointOption().withCoordinates(183,1360));
         action.release();
         action.perform();
         System.out.println("Click Talent Menu Done");
