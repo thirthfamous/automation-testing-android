@@ -7,6 +7,7 @@ import io.appium.java_client.functions.ExpectedCondition;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TalentSeeAllAspiration extends TalentPage {
@@ -57,5 +58,10 @@ public class TalentSeeAllAspiration extends TalentPage {
                                 .getText().equals(current);
                     }
                 });
+    }
+
+    public void waitForFirstArraySuggestedPositionSeeAllShowed() {
+        new WebDriverWait(this.driver, 30)
+                .until(ExpectedConditions.presenceOfElementLocated(firstArrayOfAspiration));
     }
 }

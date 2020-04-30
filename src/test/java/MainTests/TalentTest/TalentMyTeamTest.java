@@ -35,13 +35,6 @@ public class TalentMyTeamTest {
     }
 
     @Test
-    public void ShowMyTeamPageTest(){
-        talentPage = new TalentPage(driver);
-        talentPage.showMyTeamTalentPage();
-        Assertions.assertTrue(true);
-    }
-
-    @Test
     public void CheckUserNamePositionImageTest(){
 
         Assertions.assertTrue(!talentPage.getUserName().getText().equals("-"));
@@ -124,7 +117,7 @@ public class TalentMyTeamTest {
         HashMap<String, String> developmentPlan = talentPlanDetailsEditPlan.fillAllFormMyTeam();
         talentPlanDetailsEditPlan.getSubmitBtn().click();
 
-        talentPlanDetailsPage.waitForTalentPlanDetailsPageLoaded();
+        talentPlanDetailsPage.waitForTalentDevelopmentPlanDetailChanged(developmentPlan.get("name"));
 
         Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
                 .getText().equals(developmentPlan.get("name")));
@@ -164,22 +157,22 @@ public class TalentMyTeamTest {
         HashMap<String, String> developmentPlan = talentPlanDetailsEditPlan.fillAllFormMyTeam();
         talentPlanDetailsEditPlan.getSubmitBtn().click();
 
-        talentPlanDetailsPage.waitForTalentPlanDetailsPageLoaded();
+        talentPlanDetailsPage.waitForTalentDevelopmentPlanDetailChanged(developmentPlan.get("name"));
 
-        Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
-                .getText().equals(developmentPlan.get("name")));
+        Assertions.assertEquals(talentPlanDetailsPage.getPlanTitle()
+                .getText(), developmentPlan.get("name"));
 
-        Assertions.assertTrue(talentPlanDetailsPage.getStatusDone()
-                            .getText().equals("Done"));
+        Assertions.assertEquals(talentPlanDetailsPage.getStatusDone()
+                            .getText(), "Done");
 
-        Assertions.assertTrue((talentPlanDetailsPage.getPlanDate()
-                .getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") )));
+        Assertions.assertEquals(talentPlanDetailsPage.getPlanDate()
+                .getText(), developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate"));
 
-        Assertions.assertTrue(talentPlanDetailsPage.getMeasureOfSuccess()
-                .getText().equals(developmentPlan.get("measure")));
+        Assertions.assertEquals(talentPlanDetailsPage.getMeasureOfSuccess()
+                .getText(), developmentPlan.get("measure"));
 
-        Assertions.assertTrue(talentPlanDetailsPage.getRecommedationOfEmpAct()
-                .getText().equals(developmentPlan.get("recommended")));
+        Assertions.assertEquals(talentPlanDetailsPage.getRecommedationOfEmpAct()
+                .getText(), developmentPlan.get("recommended"));
 
         Assertions.assertTrue(talentPlanDetailsPage.verifyCompetency(developmentPlan.get("firstCompetency")));
     }
@@ -193,6 +186,7 @@ public class TalentMyTeamTest {
         TalentPlanDetailsPage talentPlanDetailsPage = new TalentPlanDetailsPage(driver);
         talentPlanDetailsPage.scrollToBottom();
         talentPlanDetailsPage.getdevelopmentPlanNameFirstArrayMyTeam().click();
+        talentPlanDetailsPage.waitForTalentPlanDetailsPageLoaded();
         String before = talentPlanDetailsPage.getPlanTitle().getText();
         talentPlanDetailsPage.getMoreBtn().click();
 
@@ -327,6 +321,7 @@ public class TalentMyTeamTest {
         talentPage.clickSeeAllSuggestedPosition();
 
         TalentSeeAllAspiration talentSeeAllAspiration = new TalentSeeAllAspiration(driver);
+        talentSeeAllAspiration.waitForFirstArraySuggestedPositionSeeAllShowed();
         String current = talentSeeAllAspiration.clickFirstArrayAspirationSuggestedPositionSeeAllName();
 
 
@@ -399,7 +394,7 @@ public class TalentMyTeamTest {
         talentNewDevelopmentPlanPage.getSubmitBtn().click();
 
         talentPage = new TalentPage(driver);
-        talentPage.waitForTalentPageShowAfterAddDevelopmentPlanMyTeam();
+        talentPage.waitForFirstTalentDevelopmentPlanArrayMyTeamChanged(developmentPlan.get("name"));
         Assertions.assertTrue(talentPage.getdevelopmentPlanNameFirstArrayMyTeam()
                 .getText().equals(developmentPlan.get("name")));
         Assertions.assertTrue(talentPage.getDevelopmentPlanDateMyTeam().getText().equals( developmentPlan.get("startDate") +" - "+ developmentPlan.get("endDate") ));
@@ -409,6 +404,7 @@ public class TalentMyTeamTest {
         talentPage.getdevelopmentPlanNameFirstArrayMyTeam().click();
 
         TalentPlanDetailsPage talentPlanDetailsPage = new TalentPlanDetailsPage(driver);
+        talentPlanDetailsPage.waitForTalentPlanDetailsPageLoaded();
         Assertions.assertTrue(talentPlanDetailsPage.getPlanTitle()
                 .getText().equals(developmentPlan.get("name")));
 
